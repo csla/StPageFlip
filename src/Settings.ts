@@ -43,6 +43,7 @@ export interface FlipSetting {
     showCover: boolean;
     /** If this value is true, the first and last pages will ignore the hard pages */
     disableHardPages: boolean;
+    firstCoverStartLeft: boolean;
     /** Disable content scrolling when touching a book on mobile devices */
     mobileScrollSupport: boolean;
 
@@ -79,6 +80,7 @@ export class Settings {
         maxShadowOpacity: 1,
         showCover: false,
         disableHardPages: false,
+        firstCoverStartLeft: true,
         mobileScrollSupport: true,
         swipeDistance: 30,
         clickEventForward: true,

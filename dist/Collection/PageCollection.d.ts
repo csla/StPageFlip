@@ -11,6 +11,7 @@ export declare abstract class PageCollection {
     protected readonly render: Render;
     protected readonly isShowCover: boolean;
     protected readonly disableHardPages: boolean;
+    protected readonly firstCoverStartLeft: boolean;
     /** Pages List */
     protected pages: Page[];
     /** Index of the current page in list */

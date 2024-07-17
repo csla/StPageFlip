@@ -1,5 +1,5 @@
 import { FlipDirection } from '../Flip/Flip';
-import { Page, PageDensity } from '../Page/Page';
+import { Page, PageDensity, PageOrientation } from '../Page/Page';
 import { PageFlip } from '../PageFlip';
 import { Orientation, Render } from '../Render/Render';
 
@@ -13,6 +13,8 @@ export abstract class PageCollection {
     protected readonly render: Render;
     protected readonly isShowCover: boolean;
     protected readonly disableHardPages: boolean;
+    protected readonly firstCoverStartLeft: boolean;
+
 
     /** Pages List */
     protected pages: Page[] = [];
@@ -33,6 +35,7 @@ export abstract class PageCollection {
         this.currentPageIndex = 0;
         this.isShowCover = this.app.getSettings().showCover;
         this.disableHardPages = this.app.getSettings().disableHardPages;
+        this.firstCoverStartLeft = this.app.getSettings().firstCoverStartLeft;
     }
 
     /**
@@ -59,8 +62,15 @@ export abstract class PageCollection {
         }
 
         let start = 0;
-        if (this.isShowCover && !this.disableHardPages) {
-            this.pages[0].setDensity(PageDensity.HARD);
+        if (this.isShowCover) {
+             if (!this.disableHardPages) {
+                this.pages[0].setDensity(PageDensity.HARD);
+            }
+            if (this.firstCoverStartLeft) {
+                this.pages[0].setOrientation( PageOrientation.LEFT );
+            } else {
+                this.pages[0].setOrientation( PageOrientation.RIGHT );
+            }
             this.landscapeSpread.push([start]);
             start++;
         }
