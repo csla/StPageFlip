@@ -15,7 +15,6 @@ export abstract class PageCollection {
     protected readonly disableHardPages: boolean;
     protected readonly firstCoverStartLeft: boolean;
 
-
     /** Pages List */
     protected pages: Page[] = [];
     /** Index of the current page in list */
@@ -63,13 +62,13 @@ export abstract class PageCollection {
 
         let start = 0;
         if (this.isShowCover) {
-             if (!this.disableHardPages) {
+            if (!this.disableHardPages) {
                 this.pages[0].setDensity(PageDensity.HARD);
             }
             if (this.firstCoverStartLeft) {
-                this.pages[0].setOrientation( PageOrientation.LEFT );
+                this.pages[0].setOrientation(PageOrientation.LEFT);
             } else {
-                this.pages[0].setOrientation( PageOrientation.RIGHT );
+                this.pages[0].setOrientation(PageOrientation.RIGHT);
             }
             this.landscapeSpread.push([start]);
             start++;
@@ -211,6 +210,20 @@ export abstract class PageCollection {
             return direction === FlipDirection.FORWARD
                 ? this.pages[spread[1]]
                 : this.pages[spread[0]];
+        }
+    }
+
+    public getFlippingCoverPage(direction: FlipDirection): Page {
+        const current = this.currentSpreadIndex;
+
+        if (this.render.getOrientation() === Orientation.PORTRAIT) {
+            return null;
+        } else {
+            return direction === FlipDirection.FORWARD
+                ? this.currentPageIndex === 0
+                    ? this.pages[0]
+                    : this.pages[this.landscapeSpread[current][1]] // 处理首页特殊情况 要取 spread[0]
+                : this.pages[this.landscapeSpread[current][0]];
         }
     }
 

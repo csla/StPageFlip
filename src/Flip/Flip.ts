@@ -4,6 +4,7 @@ import { Helper } from '../Helper';
 import { PageRect, Point } from '../BasicTypes';
 import { FlipCalculation } from './FlipCalculation';
 import { Page, PageDensity } from '../Page/Page';
+import { UI } from '../UI/UI';
 
 /**
  * Flipping direction
@@ -44,9 +45,11 @@ export const enum FlippingState {
 export class Flip {
     private readonly render: Render;
     private readonly app: PageFlip;
+    private readonly ui = UI;
 
     private flippingPage: Page = null;
     private bottomPage: Page = null;
+    private flippingCoverPage: Page = null; // bottomPage / flippingPage / flippingCoverPage || flippingCoverPage \ flippingPage \ bottomPage
 
     private calc: FlipCalculation = null;
 
@@ -104,7 +107,7 @@ export class Flip {
         this.animateFlippingTo(
             { x: rect.pageWidth - topMargins, y: yStart },
             { x: -rect.pageWidth, y: yDest },
-            true
+            true,
         );
     }
 
@@ -132,6 +135,8 @@ export class Flip {
         try {
             this.flippingPage = this.app.getPageCollection().getFlippingPage(direction);
             this.bottomPage = this.app.getPageCollection().getBottomPage(direction);
+
+            this.flippingCoverPage = this.app.getPageCollection().getFlippingCoverPage(direction);
 
             // In landscape mode, needed to set the density  of the next page to the same as that of the flipped
             if (this.render.getOrientation() === Orientation.LANDSCAPE) {
@@ -161,7 +166,7 @@ export class Flip {
                 direction,
                 flipCorner,
                 rect.pageWidth.toString(10), // fix bug with type casting
-                rect.height.toString(10) // fix bug with type casting
+                rect.height.toString(10), // fix bug with type casting
             );
 
             return true;
@@ -197,6 +202,11 @@ export class Flip {
                 this.flippingPage.setHardAngle((-90 * (200 - progress * 2)) / 100);
             }
 
+            this.flippingCoverPage?.setArea(this.calc.getFlippingCoverClipArea());
+            this.flippingCoverPage?.setPosition(this.calc.getBottomPagePosition());
+            this.flippingCoverPage?.setAngle(0);
+            this.flippingCoverPage?.setHardAngle(0);
+
             this.render.setPageRect(this.calc.getRect());
 
             this.render.setBottomPage(this.bottomPage);
@@ -206,7 +216,7 @@ export class Flip {
                 this.calc.getShadowStartPoint(),
                 this.calc.getShadowAngle(),
                 progress,
-                this.calc.getDirection()
+                this.calc.getDirection(),
             );
         }
     }
@@ -306,7 +316,7 @@ export class Flip {
                     { x: pageWidth - 1, y: yStart },
                     { x: pageWidth - fixedCornerSize, y: yDest },
                     false,
-                    false
+                    false,
                 );
             } else {
                 this.do(this.render.convertToPage(globalPos));
@@ -331,7 +341,7 @@ export class Flip {
         start: Point,
         dest: Point,
         isTurned: boolean,
-        needReset = true
+        needReset = true,
     ): void {
         const points = Helper.GetCordsFromTwoPoint(start, dest);
 
@@ -346,8 +356,23 @@ export class Flip {
             if (!this.calc) return;
 
             if (isTurned) {
-                if (this.calc.getDirection() === FlipDirection.BACK) this.app.turnToPrevPage();
-                else this.app.turnToNextPage();
+                if (this.calc.getDirection() === FlipDirection.BACK) {
+                    if (this.app.getOrientation() === Orientation.LANDSCAPE) {
+                        if (this.app.getCurrentPageIndex() === 1) this.app.ui.firstPageCenter();
+                        else if (this.app.getCurrentPageIndex() === this.app.getPageCount() - 1) this.app.ui.firstPageCenterReverse();
+                    }
+
+                    this.app.turnToPrevPage();
+                } else {
+                    if (this.app.getOrientation() === Orientation.LANDSCAPE) {
+                        if (this.app.getCurrentPageIndex() === 0) {
+                            this.app.ui.firstPageCenterReverse();
+                        } else if (this.app.getCurrentPageIndex() === this.app.getPageCount() - 3) {
+                            this.app.ui.firstPageEndCenter();
+                        }
+                    }
+                    this.app.turnToNextPage();
+                }
             }
 
             if (needReset) {

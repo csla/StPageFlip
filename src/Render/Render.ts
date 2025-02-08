@@ -440,7 +440,7 @@ export abstract class Render {
         const x =
             direction === FlipDirection.FORWARD
                 ? pos.x - rect.left - rect.width / 2
-                : rect.width / 2 - pos.x + rect.left;
+                : rect.width / 2 - pos.x + rect.left; // rect.width / 2 - (pos.x - rect.left) : left page relative 0,0 is right top corner
 
         return {
             x,

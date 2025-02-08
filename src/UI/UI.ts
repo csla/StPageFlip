@@ -44,6 +44,7 @@ export abstract class UI {
         this.wrapper = inBlock.querySelector('.stf__wrapper');
 
         this.app = app;
+        this.app.setUIInstance(this);
 
         const k = this.app.getSettings().usePortrait ? 1 : 2;
 
@@ -283,4 +284,7 @@ export abstract class UI {
             this.app.userStop(pos, isSwipe);
         }
     };
+    public firstPageCenter(): void {}
+    public firstPageEndCenter(): void {}
+    public firstPageCenterReverse(): void {}
 }

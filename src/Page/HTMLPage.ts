@@ -35,7 +35,7 @@ export class HTMLPage extends Page {
             this.temporaryCopy = new HTMLPage(
                 this.render,
                 this.copiedElement,
-                this.nowDrawingDensity
+                this.nowDrawingDensity,
             );
         }
 
@@ -92,9 +92,9 @@ export class HTMLPage extends Page {
             ` +
             (this.orientation === PageOrientation.LEFT
                 ? `transform-origin: ${this.render.getRect().pageWidth}px 0; 
-                   transform: translate3d(0, 0, 0) rotateY(${angle}deg);`
+                    transform: translate3d(0, 0, 0) rotateY(${angle}deg);`
                 : `transform-origin: 0 0; 
-                   transform: translate3d(${pos}px, 0, 0) rotateY(${angle}deg);`);
+                    transform: translate3d(${pos}px, 0, 0) rotateY(${angle}deg);`);
 
         this.element.style.cssText = newStyle;
     }

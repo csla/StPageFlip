@@ -12,8 +12,8 @@
   },
   "publishConfig": {},
   "homepage": "https://nodlik.github.io/StPageFlip/",
-  "dependencies": {},
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.0",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.1",
     "css-loader": "^7.1.2",
@@ -21,18 +21,18 @@
     "eslint-plugin-typescript": "^0.14.0",
     "prettier": "^3.3.3",
     "rollup": "^4.18.1",
-
     "rollup-plugin-postcss": "^4.0.0",
-    "@rollup/plugin-terser": "^0.4.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
     "typedoc": "^0.26.4",
     "typescript": "latest",
+    "vite": "^6.1.0",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
+    "dev": "vite",
     "eslint": "eslint . --ext .ts",
     "build-global": "npx webpack",
     "build": "rollup -c"

@@ -33,7 +33,7 @@ export class PageFlip extends EventObject {
     private flipController: Flip;
     private render: Render;
 
-    private ui: UI;
+    public ui: UI;
 
     /**
      * Create a new PageFlip instance
@@ -395,5 +395,9 @@ export class PageFlip extends EventObject {
                 else this.flipController.stopMove();
             }
         }
+    }
+
+    public setUIInstance(ui: UI): void {
+        this.ui = ui;
     }
 }
