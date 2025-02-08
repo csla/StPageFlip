@@ -44,7 +44,6 @@ export abstract class UI {
         this.wrapper = inBlock.querySelector('.stf__wrapper');
 
         this.app = app;
-        this.app.setUIInstance(this);
 
         const k = this.app.getSettings().usePortrait ? 1 : 2;
 

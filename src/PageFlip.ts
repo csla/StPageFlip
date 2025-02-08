@@ -396,8 +396,4 @@ export class PageFlip extends EventObject {
             }
         }
     }
-
-    public setUIInstance(ui: UI): void {
-        this.ui = ui;
-    }
 }

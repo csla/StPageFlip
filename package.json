@@ -1,7 +1,8 @@
 {
   "name": "page-flip",
-  "version": "2.1.0",
-  "main": "dist/js/page-flip.browser.js",
+  "version": "2.2.0",
+  "module": "dist/js/page-flip.module.js",
+  "main": "dist/js/page-flip.module.js",
   "browser": "dist/js/page-flip.browser.js",
   "author": "oleg.litovski9@gmail.com",
   "license": "MIT",
@@ -11,6 +12,7 @@
     "url": "https://github.com/Nodlik/StPageFlip.git"
   },
   "publishConfig": {},
+  "type": "module",
   "homepage": "https://nodlik.github.io/StPageFlip/",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.0",
