@@ -134,6 +134,7 @@ export class Flip {
 
         try {
             this.flippingPage = this.app.getPageCollection().getFlippingPage(direction);
+            this.render.setFlippingPage(this.flippingPage);
             this.bottomPage = this.app.getPageCollection().getBottomPage(direction);
 
             this.flippingCoverPage = this.app.getPageCollection().getFlippingCoverPage(direction);
