@@ -147,7 +147,6 @@ export abstract class Render {
             fn && fn();
             return;
         }
-        
         this.isAnimationRenderLoopRunning = true;
         let callbackCalled = false;
         const loop = (timer: number): void => {
@@ -179,7 +178,6 @@ export abstract class Render {
         onAnimateEnd: AnimationSuccessAction
     ): void {
         this.finishAnimation(); // finish the previous animation process
-
         this.startAnimationRenderLoop(() => {
             this.animation = {
                 frames,

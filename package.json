@@ -11,6 +11,9 @@
     "type": "git",
     "url": "https://github.com/Nodlik/StPageFlip.git"
   },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {},
   "type": "module",
   "homepage": "https://nodlik.github.io/StPageFlip/",
@@ -37,7 +40,8 @@
     "dev": "vite",
     "eslint": "eslint . --ext .ts",
     "build-global": "npx webpack",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepare": "npm run build"
   },
   "keywords": [
     "typescript",
