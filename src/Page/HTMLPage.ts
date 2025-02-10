@@ -29,7 +29,14 @@ export class HTMLPage extends Page {
         }
 
         if (this.temporaryCopy === null) {
-            this.copiedElement = this.element.cloneNode(true) as HTMLElement;
+            // 增加镜像效果
+            const mask = document.createElement('div');
+            mask.className = 'mask'; 
+            mask.style.transform = 'scaleX(-1)';
+            mask.appendChild(this.element.cloneNode(true) as HTMLElement);
+            this.copiedElement = document.createElement('div');
+            this.copiedElement.appendChild(mask);
+            this.copiedElement.className = 'flipping-copy'; 
             this.element.parentElement.appendChild(this.copiedElement);
 
             this.temporaryCopy = new HTMLPage(
