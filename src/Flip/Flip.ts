@@ -427,9 +427,11 @@ export class Flip {
     private getAnimationDuration(size: number): number {
         const defaultTime = this.app.getSettings().flippingTime;
 
-        if (size >= 1000) return defaultTime;
+        const rect = this.getBoundsRect();
+        const ratio = rect.pageWidth / 300;
+        const timePerPoint = defaultTime / 600;
 
-        return (size / 1000) * defaultTime;
+        return (size / ratio) * timePerPoint;
     }
 
     private checkDirection(direction: FlipDirection): boolean {
