@@ -9,18 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: true
 
       - name: Build project
-        run: pnpm build || npm run build || npx rollup -c || npx vite build
+        run: |
+          pnpm build || npm run build || npx rollup -c || npx vite build
 
       - name: Upload dist
         uses: actions/upload-artifact@v4
